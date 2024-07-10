@@ -14,12 +14,11 @@ public class ImageController {
     @Autowired
     ImageServices imageService;
 
-<<<<<<< HEAD
+
     @DeleteMapping(path = "/{API_BASE_URL}{id}")
     public void deleteImage(@PathVariable long id, @RequestBody Image image) {
         imageService.deleteImage(id);
     }
-=======
->>>>>>> main
+
 
 }
