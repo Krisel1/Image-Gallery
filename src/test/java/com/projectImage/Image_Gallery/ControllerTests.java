@@ -10,9 +10,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 public class ControllerTests {
@@ -22,10 +29,18 @@ public class ControllerTests {
 
     @InjectMocks
     private ImageController imageController;
+    private MockMvc mockMvc;
+
+    private Image image1;
+    private Image image2;
+    private Image image3;
+    private ArrayList<Image> imageList;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+
         Image image1 = new Image();
         image1.setId(1L);
         image1.setTitle("árbol");
@@ -46,10 +61,23 @@ public class ControllerTests {
         image3.setUrl("https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true");
         image3.setFavorite(false);
 
-        ArrayList<Image> imageList = new ArrayList<Image>();
+        imageList = new ArrayList<Image>();
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
+    }
+
+    @Test
+    public void deleteImage() throws Exception{
+        when(imageServices.deleteImage(2L)).thenReturn(imageList);
+
+
+        mockMvc.perform(delete("/api/v1/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{'id': 1L, 'title':'árbol', 'description': 'picture of mountains, trees and a lake'," +
+                        "'url': 'https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true'," +
+                        "'isFavorite': false }]"));
     }
 
 
