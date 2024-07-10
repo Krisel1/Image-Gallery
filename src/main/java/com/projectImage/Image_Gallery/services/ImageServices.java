@@ -11,4 +11,6 @@ public class ImageServices {
     @Autowired
     IimageRepository iimageRepository;
 
+    public void deleteImage(long id) {
+    }
 }
