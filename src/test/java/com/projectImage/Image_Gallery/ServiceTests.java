@@ -26,6 +26,9 @@ public class ServiceTests {
     private ImageServices imageServices;
 
     @BeforeEach
+    /*El método MockitoAnnotations.openMocks(this) se utiliza para inicializar los mocks que han sido anotados con
+    @Mock y @InjectMocks. En otras palabras, se encarga de preparar los objetos simulados (mocks) que se utilizarán
+    en las pruebas.*/
     public setUp(){
         MockitoAnnotations.openMocks(this);
     }
@@ -34,9 +37,15 @@ public class ServiceTests {
     public void test_if_deleteImage_deletes_by_Id(){
         ArrayList<Image> listOfImages = new ArrayList<Image>();
 
-        Image image1 = new Image ("árbol", "picture of mountains, trees and a lake", "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true", false);
-        Image image2 = new Image ("hojas", "picture of green leaves, yellow and orange leaves", "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/hojas.jpg?raw=true", false);
-        Image image3 = new Image ("lago", "picture of mountains, trees and a lake in winter", "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true", false);
+        Image image1 = new Image ("árbol", "picture of mountains, trees and a lake",
+                "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true",
+                false);
+        Image image2 = new Image ("hojas", "picture of green leaves, yellow and orange leaves",
+                "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/hojas.jpg?raw=true",
+                false);
+        Image image3 = new Image ("lago", "picture of mountains, trees and a lake in winter",
+                "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true",
+                false);
         listOfImages.add(image1);
         listOfImages.add(image2);
         listOfImages.add(image3);
