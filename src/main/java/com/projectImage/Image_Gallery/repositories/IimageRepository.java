@@ -1,6 +1,8 @@
 package com.projectImage.Image_Gallery.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IimageRepository extends CrudRepository {
+import com.projectImage.Image_Gallery.models.Image;
+
+public interface IimageRepository extends  JpaRepository<Image, Long>{
 }
