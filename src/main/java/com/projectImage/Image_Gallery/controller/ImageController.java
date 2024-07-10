@@ -15,4 +15,5 @@ public class ImageController {
     public void deleteImage(@PathVariable long id, @RequestBody Image image) {
         imageService.deleteImage(id);
     }
+
 }
