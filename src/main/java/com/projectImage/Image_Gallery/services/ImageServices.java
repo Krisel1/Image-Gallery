@@ -12,5 +12,6 @@ public class ImageServices {
     IimageRepository iimageRepository;
 
     public void deleteImage(long id) {
+        iimageRepository.deleteById(id);
     }
 }
