@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class ImageController {
-    String API_BASE_URL = "http://localhost:8080/api/v1";
 
     @Autowired
-    ImageServices imageService;
+    ImageServices imageServices;
 
-
+    @PostMapping(path = "images")
+    public Image createImage(@RequestBody Image newImage) {
+        return imageServices.createImage(newImage);
+    }
 }
