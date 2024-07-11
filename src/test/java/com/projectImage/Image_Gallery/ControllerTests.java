@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -68,8 +68,8 @@ public class ControllerTests {
     }
 
     @Test
-    public void deleteImage() throws Exception{
-        when(imageServices.deleteImage(2L)).thenReturn(imageList);
+    public void test_if_controller_deleteImage_deletes_by_Id() throws Exception{
+        doNothing().when(imageServices).deleteImage(2L);
 
 
         mockMvc.perform(delete("/api/v1/2")

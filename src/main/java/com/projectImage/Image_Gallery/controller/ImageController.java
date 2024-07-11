@@ -18,8 +18,8 @@ public class ImageController {
 
 
     @DeleteMapping(path = "/{API_BASE_URL}{id}")
-    public void deleteImage(@PathVariable long id, @RequestBody Image image) {
-        imageService.deleteImage(id);
+    public String deleteImage(@PathVariable long id) {
+        return imageService.deleteImage(id);
     }
 
 

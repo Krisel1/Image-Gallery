@@ -1,6 +1,6 @@
 package com.projectImage.Image_Gallery.services;
 
-import com.projectImage.Image_Gallery.repositories.IimageRepository;
+import com.projectImage.Image_Gallery.repositories.IImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,15 @@ import org.springframework.stereotype.Service;
 public class ImageServices {
 
     @Autowired
-    IimageRepository iimageRepository;
+    IImageRepository iImageRepository;
 
-    public void deleteImage(long id) {
-        iimageRepository.deleteById(id);
+
+    public String deleteImage(Long id) {
+        try{
+            iImageRepository.deleteById(id);
+            return "The image"+ id + "has been deleted correctly.";
+        }catch (Exception ignored){
+            return "That image does not exist.";
+        }
     }
 }
