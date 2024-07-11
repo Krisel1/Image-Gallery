@@ -71,7 +71,7 @@ public class ControllerTests {
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
 
-        when(imageServices.getImage(2L).thenReturn(imageList));
+        when(imageServices .deleteImage().getImage(2L).thenReturn(imageList));
 
         imageController.deleteImage(2L);
 
