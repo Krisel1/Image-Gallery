@@ -13,7 +13,7 @@ public class ImageController {
     @Autowired
     ImageServices imageService;
 
-    @PutMapping(path = "/image")
+    @PutMapping(path = "/images/{id}")
     public void updateImage(@RequestBody Image image, @PathVariable Long id){
         imageService.updateImage(id, image);
     }
