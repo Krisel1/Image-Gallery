@@ -51,7 +51,7 @@ public class ServiceTests {
         listOfImages.add(image1);
         listOfImages.add(image2);
         listOfImages.add(image3);
-        when(iImageRepository.getAllImages()).thenReturn(listOfImages);
+        when(iImageRepository.findAll()).thenReturn(listOfImages);
 
         imageServices.deleteImage(2L);
 
