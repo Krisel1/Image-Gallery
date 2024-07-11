@@ -17,9 +17,9 @@ public class ImageController {
     ImageServices imageService;
 
 
-    @DeleteMapping(path = "/{API_BASE_URL}{id}")
-    public String deleteImage(@PathVariable long id) {
-        return imageService.deleteImage(id);
+    @DeleteMapping(path = "/{id}")
+    public void deleteImage(@PathVariable long id) {
+        imageService.deleteImage(id);
     }
 
 

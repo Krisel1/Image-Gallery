@@ -9,17 +9,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 public class ControllerTests {
@@ -56,6 +58,7 @@ public class ControllerTests {
         image2.setFavorite(false);
 
         Image image3 = new Image();
+        image3.setId(3L);
         image3.setTitle("lago");
         image3.setDescription("picture of mountains, trees and a lake in winter");
         image3.setUrl("https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true");
@@ -68,16 +71,14 @@ public class ControllerTests {
     }
 
     @Test
-    public void test_if_controller_deleteImage_deletes_by_Id() throws Exception{
-        doNothing().when(imageServices).deleteImage(2L);
+    public void test_if_deleteImage_deletes_by_Id() {
 
+        when(imageServices.getImage(2L).thenReturn(imageList));
 
-        mockMvc.perform(delete("/api/v1/2")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1L, 'title':'árbol', 'description': 'picture of mountains, trees and a lake'," +
-                        "'url': 'https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true'," +
-                        "'isFavorite': false }]"));
+        imageController.deleteImage(2L);
+
+        verify(imageServices).deleteImage(2L);
+
     }
 
 

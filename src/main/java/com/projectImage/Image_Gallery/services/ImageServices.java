@@ -12,12 +12,9 @@ public class ImageServices {
     IImageRepository iImageRepository;
 
 
-    public String deleteImage(Long id) {
-        try{
-            iImageRepository.deleteById(id);
-            return "The image"+ id + "has been deleted correctly.";
-        }catch (Exception ignored){
-            return "That image does not exist.";
-        }
+    public void deleteImage(long id) {
+
+        iImageRepository.deleteById(id);
     }
+
 }

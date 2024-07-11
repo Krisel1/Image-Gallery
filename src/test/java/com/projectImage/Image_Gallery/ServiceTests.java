@@ -1,6 +1,7 @@
 package com.projectImage.Image_Gallery;
 
 import com.projectImage.Image_Gallery.models.Image;
+
 import com.projectImage.Image_Gallery.repositories.IImageRepository;
 import com.projectImage.Image_Gallery.services.ImageServices;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +27,6 @@ public class ServiceTests {
     private ImageServices imageServices;
 
     @BeforeEach
-    /*El método MockitoAnnotations.openMocks(this) se utiliza para inicializar los mocks que han sido anotados con
-    @Mock y @InjectMocks. En otras palabras, se encarga de preparar los objetos simulados (mocks) que se utilizarán
-    en las pruebas.*/
-
 
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -58,4 +55,5 @@ public class ServiceTests {
         verify(iImageRepository).deleteById(2L);
 
     }
+
 }
