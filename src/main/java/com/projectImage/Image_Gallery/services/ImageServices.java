@@ -1,6 +1,6 @@
 package com.projectImage.Image_Gallery.services;
 
-import com.projectImage.Image_Gallery.repositories.IimageRepository;
+import com.projectImage.Image_Gallery.repositories.IImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 public class ImageServices {
 
     @Autowired
-    IimageRepository iimageRepository;
+    IImageRepository iImageRepository;
 
 }
