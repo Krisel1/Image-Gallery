@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ServiceTests {
 
     @Mock
-    private IImageRepository iimageRepository;
+    private IImageRepository iImageRepository;
 
     @InjectMocks
     private ImageServices imageServices;
