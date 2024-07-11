@@ -5,8 +5,6 @@ import com.projectImage.Image_Gallery.services.ImageServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "*")
@@ -18,13 +16,12 @@ public class ImageController {
 
     @PostMapping(path = "images")
     public Image createImage(@RequestBody Image newImage) {
-        return imageServices.createImage(newImage);
+        return imageService.createImage(newImage);
     }
 
     @DeleteMapping(path = "/{id}")
     public void deleteImage(@PathVariable long id) {
         imageService.deleteImage(id);
     }
-
 
 }

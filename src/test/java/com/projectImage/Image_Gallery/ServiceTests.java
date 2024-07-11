@@ -1,7 +1,6 @@
 package com.projectImage.Image_Gallery;
 
 import com.projectImage.Image_Gallery.models.Image;
-
 import com.projectImage.Image_Gallery.repositories.IImageRepository;
 import com.projectImage.Image_Gallery.services.ImageServices;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,21 +8,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-
+import org.springframework.boot.test.context.SpringBootTest;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ServiceTests {
 
@@ -31,21 +29,12 @@ public class ServiceTests {
     private IImageRepository iImageRepository;
 
     @InjectMocks
-    ImageServices imageServices;
-
-    @Test
-    void test_Create_Image_Id() {
-        Image image = new Image();
-        when(iimageRepository.save(any(Image.class))).thenReturn(image);
+    private ImageServices imageServices;
 
     @BeforeEach
 
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        Image result = imageServices.createImage(image);
-
-        assertNotNull(result);
-        verify(iimageRepository, times(1)).save(any(Image.class));
     }
 
     @Test
@@ -72,27 +61,39 @@ public class ServiceTests {
 
     }
 
-    void test_Create_Image_Title() {
+    @Test
+    void test_Create_Image_Id() {
         Image image = new Image();
-        image.setTitle("new Image");
-        when(iimageRepository.save(any(Image.class))).thenReturn(image);
+        when(iImageRepository.save(any(Image.class))).thenReturn(image);
 
         Image result = imageServices.createImage(image);
 
         assertNotNull(result);
-        verify(iimageRepository).save(any(Image.class));
+        verify(iImageRepository, times(1)).save(any(Image.class));
+    }
+
+    @Test
+    void test_Create_Image_Title() {
+        Image image = new Image();
+        image.setTitle("new Image");
+        when(iImageRepository.save(any(Image.class))).thenReturn(image);
+
+        Image result = imageServices.createImage(image);
+
+        assertNotNull(result);
+        verify(iImageRepository).save(any(Image.class));
     }
 
     @Test
     void test_Create_Image_Description() {
         Image image = new Image();
         image.setDescription("HTTP methods");
-        when(iimageRepository.save(any(Image.class))).thenReturn(image);
+        when(iImageRepository.save(any(Image.class))).thenReturn(image);
 
         Image result = imageServices.createImage(image);
 
         assertNotNull(result);
         assertEquals(result.getDescription(), "HTTP methods");
-        verify(iimageRepository).save(any(Image.class));
+        verify(iImageRepository).save(any(Image.class));
     }
 }
