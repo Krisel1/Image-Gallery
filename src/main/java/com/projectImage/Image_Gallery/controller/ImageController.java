@@ -17,7 +17,7 @@ public class ImageController {
     ImageServices imageService;
 
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/images/{id}")
     public void deleteImage(@PathVariable long id) {
         imageService.deleteImage(id);
     }
