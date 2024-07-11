@@ -11,4 +11,10 @@ public class ImageServices {
     @Autowired
     IImageRepository iImageRepository;
 
+
+    public void deleteImage(long id) {
+
+        iImageRepository.deleteById(id);
+    }
+
 }
