@@ -2,6 +2,8 @@ package com.projectImage.Image_Gallery.controller;
 
 import java.util.List;
 
+import javax.management.InstanceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,7 @@ public class ImageController {
     }
 
     @GetMapping("/{id}")
-    public Image get(@PathVariable Long id){
+    public Image get(@PathVariable Long id) throws InstanceNotFoundException{
         return imageService.getImageById(id);
     }
             

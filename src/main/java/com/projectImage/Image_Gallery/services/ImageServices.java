@@ -17,7 +17,7 @@ public class ImageServices {
     IimageRepository IimageRepository;
 
     public List<Image> getAllImages(){
-        return IimageRepository.findAll();
+        return (List<Image>) IimageRepository.findAll();
     }
 
     public Image getImageById(@PathVariable Long id) {
