@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -27,20 +28,42 @@ public class ControllerTests {
     @InjectMocks
     private ImageController imageController;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     void test_Create_Image_Id() {
         Image newImage = new Image();
+        newImage.setId(1L);
         when(imageServices.createImage(any(Image.class))).thenReturn(newImage);
 
         Image result = imageController.createImage(newImage);
 
         assertNotNull(result);
+        assertEquals(result.getId(), 1L);
         verify(imageServices, times(1)).createImage(any(Image.class));
     }
 
+    @Test
+    public void test_Create_Image_title() {
+        Image newImage = new Image();
+        newImage.setTitle("New Image");
+        when(imageServices.createImage(any(Image.class))).thenReturn(newImage);
+
+        Image result = imageController.createImage(newImage);
+
+        assertNotNull(result);
+        assertEquals(result.getTitle(), "New Image");
+        verify(imageServices, times(1)).createImage(any(Image.class));
+    }
+
+    @Test
+    public void test_Create_Image_Description() {
+        Image newImage = new Image();
+        newImage.setDescription("HTTP methods");
+        when(imageServices.createImage(any(Image.class))).thenReturn(newImage);
+
+        Image result = imageController.createImage(newImage);
+
+        assertNotNull(result);
+        assertEquals(result.getDescription(), "HTTP methods");
+        verify(imageServices, times(1)).createImage(any(Image.class));
+    }
 }

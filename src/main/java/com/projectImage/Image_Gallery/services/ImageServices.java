@@ -16,6 +16,4 @@ public class ImageServices {
         return (Image) iimageRepository.save(newImage);
     }
 
-
-
 }
