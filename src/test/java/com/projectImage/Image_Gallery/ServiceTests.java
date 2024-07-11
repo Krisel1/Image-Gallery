@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -19,10 +19,10 @@ import static org.mockito.Mockito.*;
 public class ServiceTests {
 
     @Mock
-    private IimageRepository iimageRepository;
+    IimageRepository iimageRepository;
 
     @InjectMocks
-    private ImageServices imageServices;
+    ImageServices imageServices;
 
     @Test
     void test_Create_Image_Id() {
@@ -35,4 +35,28 @@ public class ServiceTests {
         verify(iimageRepository, times(1)).save(any(Image.class));
     }
 
+    @Test
+    void test_Create_Image_Title() {
+        Image image = new Image();
+        image.setTitle("new Image");
+        when(iimageRepository.save(any(Image.class))).thenReturn(image);
+
+        Image result = imageServices.createImage(image);
+
+        assertNotNull(result);
+        verify(iimageRepository).save(any(Image.class));
+    }
+
+    @Test
+    void test_Create_Image_Description() {
+        Image image = new Image();
+        image.setDescription("HTTP methods");
+        when(iimageRepository.save(any(Image.class))).thenReturn(image);
+
+        Image result = imageServices.createImage(image);
+
+        assertNotNull(result);
+        assertEquals(result.getDescription(), "HTTP methods");
+        verify(iimageRepository).save(any(Image.class));
+    }
 }

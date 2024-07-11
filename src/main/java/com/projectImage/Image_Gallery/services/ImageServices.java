@@ -13,7 +13,7 @@ public class ImageServices {
     IimageRepository iimageRepository;
 
     public Image createImage(Image newImage){
-        return (Image) iimageRepository.save(newImage);
+        return iimageRepository.save(newImage);
     }
 
 }
