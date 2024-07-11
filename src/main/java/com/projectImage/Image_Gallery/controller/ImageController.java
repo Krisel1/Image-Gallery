@@ -6,14 +6,16 @@ import javax.management.InstanceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
-
 
 @RestController
 @RequestMapping("/api/v1")
@@ -22,7 +24,7 @@ public class ImageController {
 
 
     @Autowired
-    private ImageServices imageService;
+    ImageServices imageService;
 
     @GetMapping("/images")
     public List<Image> getAllImages() {
@@ -34,6 +36,14 @@ public class ImageController {
         return imageService.getImageById(id);
     }
             
+    @PostMapping(path = "images")
+    public Image createImage(@RequestBody Image newImage) {
+        return imageService.createImage(newImage);
+    }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteImage(@PathVariable long id) {
+        imageService.deleteImage(id);
+    }
 
 }
