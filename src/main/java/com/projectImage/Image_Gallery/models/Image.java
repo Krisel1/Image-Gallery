@@ -23,7 +23,7 @@ public class Image {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column()
+    @Column(name = "URL")
     private String url;
 
     @Column(name = "FAVORITE")

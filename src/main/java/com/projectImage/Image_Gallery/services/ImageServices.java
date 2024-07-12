@@ -16,4 +16,22 @@ public class ImageServices {
         return iimageRepository.save(newImage);
     }
 
+    public void createAndSaveImages() {
+        Image img1 = new Image();
+        img1.setTitle("Sunset");
+        img1.setDescription("A beautiful sunset over the mountains.");
+        img1.setUrl("http://example.com/sunset.jpg");
+        img1.setFavorite(true);
+        createImage(img1);
+
+        Image img2 = new Image();
+        img2.setTitle("Ocean");
+        img2.setDescription("A tranquil ocean scene.");
+        img2.setUrl("http://example.com/ocean.jpg");
+        img2.setFavorite(false);
+        createImage(img2);
+
+        iimageRepository.save(img1);
+        iimageRepository.save(img2);
+    }
 }
