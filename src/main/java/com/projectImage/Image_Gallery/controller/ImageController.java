@@ -43,7 +43,7 @@ public class ImageController {
         return imageService.createImage(newImage);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/images/{id}")
     public void deleteImage(@PathVariable long id) {
         imageService.deleteImage(id);
     }
