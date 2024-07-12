@@ -25,7 +25,6 @@ public class Image {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "URL")
     @Column(name = "FILE PATH")
     private String url;
 
