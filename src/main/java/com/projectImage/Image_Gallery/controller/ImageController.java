@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -35,7 +37,7 @@ public class ImageController {
     public Image get(@PathVariable Long id) throws InstanceNotFoundException{
         return imageService.getImageById(id);
     }
-            
+
     @PostMapping(path = "images")
     public Image createImage(@RequestBody Image newImage) {
         return imageService.createImage(newImage);
@@ -46,4 +48,8 @@ public class ImageController {
         imageService.deleteImage(id);
     }
 
+    @PutMapping(path = "/images/{id}")
+    public void updateImage(@RequestBody Image image, @PathVariable Long id){
+        imageService.updateImage(id, image);
+    }
 }
