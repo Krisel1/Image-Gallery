@@ -48,6 +48,17 @@ public class ServiceTests {
         verify(iimageRepository).save(any(Image.class));
         assert(newImage.getId().equals(id));
     }
+
+//    @Test
+//    public void testUpdateImageFavorite() {
+//        // Arrange
+//        Long id = 1L;
+//
+//        // Act
+//        imageServices.tagImageAsFavorite(id);
+//
+//        // Assert
+//        verify(iimageRepository).save(any(Image.class));
+//        assert(newImage.getId().equals(id));
+//    }
 }
-
-
