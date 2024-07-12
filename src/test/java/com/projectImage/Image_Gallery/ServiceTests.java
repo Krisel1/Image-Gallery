@@ -101,6 +101,7 @@ public class ServiceTests {
         verify(iImageRepository).save(any(Image.class));
     }
 
+    @Test
     public void testUpdateImage() {
         // Arrange
         Long id = 1L;
