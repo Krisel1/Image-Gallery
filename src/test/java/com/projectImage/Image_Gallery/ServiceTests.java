@@ -115,23 +115,4 @@ public class ServiceTests {
         assert (newImage.getId().equals(id));
     }
 
-    @Test
-    public void test_Create_Images() {
-        imageServices.createAndSaveImages();
-
-        List<Image> images = (List<Image>) iImageRepository.findAll();
-        assertThat(images).hasSize(2);
-
-        Image img1 = images.get(0);
-        assertThat(img1.getTitle()).isEqualTo("Sunset");
-        assertThat(img1.getDescription()).isEqualTo("A beautiful sunset over the mountains.");
-        assertThat(img1.getUrl()).isEqualTo("http://example.com/sunset.jpg");
-        assertThat(img1.isFavorite()).isTrue();
-
-        Image img2 = images.get(1);
-        assertThat(img2.getTitle()).isEqualTo("Ocean");
-        assertThat(img2.getDescription()).isEqualTo("A tranquil ocean scene.");
-        assertThat(img2.getUrl()).isEqualTo("http://example.com/ocean.jpg");
-        assertThat(img2.isFavorite()).isFalse();
-    }
 }

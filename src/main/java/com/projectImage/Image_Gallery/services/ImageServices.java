@@ -38,35 +38,7 @@ public class ImageServices {
         iImageRepository.save(newImage);
     }
 
-    public void createAndSaveImages() {
-        Image img1 = new Image();
-        img1.setTitle("Sunset");
-        img1.setDescription("A beautiful sunset over the mountains.");
-        img1.setUrl("http://example.com/sunset.jpg");
-        img1.setFavorite(true);
-        createImage(img1);
 
-        Image img2 = new Image();
-        img2.setTitle("Ocean");
-        img2.setDescription("A tranquil ocean scene.");
-        img2.setUrl("http://example.com/ocean.jpg");
-        img2.setFavorite(false);
-        createImage(img2);
-
-        iImageRepository.save(img1);
-        iImageRepository.save(img2);
-    }
-
-//    public void tagImageAsFavorite(Long id) {
-//        Optional<Image> imageOptional = iImageRepository.findById(id);
-//        if (imageOptional.isPresent()) {
-//            Image image = imageOptional.get();
-//            image.setFavorite(true);
-//            iImageRepository.save(image);
-//        } else {
-//            throw new EntityNotFoundException("Image not found with id: " + id);
-//        }
-//    }
 }
 
 
