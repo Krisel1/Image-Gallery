@@ -73,11 +73,12 @@ public class ControllerTests {
 
     /*@Test
     public void test_if_deleteImage_deletes_by_Id() {
+        when(imageController.getAllImages()).thenReturn(imageList);
 
-        when(imageServices .deleteImage().getImage(2L).thenReturn(imageList));
-
+        //Act
         imageController.deleteImage(2L);
 
+        //Assert
         verify(imageServices).deleteImage(2L);
 
     }*/
