@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,7 +52,6 @@ public class ServiceTests {
         listOfImages.add(image1);
         listOfImages.add(image2);
         listOfImages.add(image3);
-        when(iImageRepository.findAll()).thenReturn(listOfImages);
 
         imageServices.deleteImage(2L);
 
