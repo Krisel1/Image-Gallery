@@ -4,24 +4,33 @@ package com.projectImage.Image_Gallery;
 import com.projectImage.Image_Gallery.controller.ImageController;
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import java.util.ArrayList;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 public class ControllerTests {
@@ -37,6 +46,9 @@ public class ControllerTests {
     private Image image2;
     private Image image3;
     private ArrayList<Image> imageList;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
@@ -68,19 +80,71 @@ public class ControllerTests {
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
+        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+    }
+
+    @Test
+    public void testUpdateImage() throws Exception {
+        Long id = 1L;
+        Image testImage = new Image();
+        testImage.setName("Test Image");
+
+        doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
+
+        mockMvc.perform(put("/api/images/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(testImage)))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
+        when(imageController.getAllImages()).thenReturn(imageList);
 
-        when(imageServices.getImage(2L).thenReturn(imageList));
-
+        //Act
         imageController.deleteImage(2L);
 
+        //Assert
         verify(imageServices).deleteImage(2L);
 
     }
 
+    @Test
+        void test_Create_Image_Id() {
+        Image image = new Image();
+        image.setId(1L);
+        when(imageServices.createImage(any(Image.class))).thenReturn(image);
 
+        Image result = imageController.createImage(image);
 
+        assertNotNull(result);
+        assertEquals(result.getId(), 1L);
+        verify(imageServices, times(1)).createImage(any(Image.class));
+    }
+
+    @Test
+    public void test_Create_Image_title() {
+        Image image = new Image();
+        image.setTitle("New Image");
+        when(imageServices.createImage(any(Image.class))).thenReturn(image);
+
+        Image result = imageController.createImage(image);
+
+        assertNotNull(result);
+        assertEquals(result.getTitle(), "New Image");
+        verify(imageServices, times(1)).createImage(any(Image.class));
+    }
+
+    @Test
+    public void test_Create_Image_Description() {
+        Image image = new Image();
+        image.setDescription("HTTP methods");
+        when(imageServices.createImage(any(Image.class))).thenReturn(image);
+
+        Image result = imageController.createImage(image);
+
+        assertNotNull(result);
+        assertEquals(result.getDescription(), "HTTP methods");
+        verify(imageServices, times(1)).createImage(any(Image.class));
+    }
 }
