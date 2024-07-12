@@ -2,9 +2,6 @@ package com.projectImage.Image_Gallery;
 
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.repositories.IImageRepository;
-import com.projectImage.Image_Gallery.controller.ImageController;
-import com.projectImage.Image_Gallery.models.Image;
-import com.projectImage.Image_Gallery.repositories.IimageRepository;
 import com.projectImage.Image_Gallery.services.ImageServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,14 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.http.MediaType;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +36,6 @@ public class ServiceTests {
     @BeforeEach
 
     public void setUp() {
-    public void setUp(){
         MockitoAnnotations.openMocks(this);
     }
 
@@ -57,10 +46,10 @@ public class ServiceTests {
         Image image1 = new Image(1L, "árbol", "picture of mountains, trees and a lake",
                 "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true",
                 false);
-        Image image2 = new Image(2L,"hojas", "picture of green leaves, yellow and orange leaves",
+        Image image2 = new Image(2L, "hojas", "picture of green leaves, yellow and orange leaves",
                 "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/hojas.jpg?raw=true",
                 false);
-        Image image3 = new Image(3L,"lago", "picture of mountains, trees and a lake in winter",
+        Image image3 = new Image(3L, "lago", "picture of mountains, trees and a lake in winter",
                 "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true",
                 false);
         listOfImages.add(image1);
@@ -109,7 +98,7 @@ public class ServiceTests {
         assertEquals(result.getDescription(), "HTTP methods");
         verify(iImageRepository).save(any(Image.class));
     }
-}
+
     public void testUpdateImage() {
         // Arrange
         Long id = 1L;
@@ -120,8 +109,8 @@ public class ServiceTests {
         imageServices.updateImage(id, newImage);
 
         // Assert
-        verify(iimageRepository).save(any(Image.class));
-        assert(newImage.getId().equals(id));
+        verify(iImageRepository).save(any(Image.class));
+        assert (newImage.getId().equals(id));
     }
 
 //    @Test
