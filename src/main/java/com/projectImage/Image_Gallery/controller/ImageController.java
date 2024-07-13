@@ -28,17 +28,17 @@ public class ImageController {
     @Autowired
     ImageServices imageService;
 
-    @GetMapping("/images")
+    @GetMapping("")
     public List<Image> getAllImages() {
         return imageService.getAllImages();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/images/{id}")
     public Image get(@PathVariable Long id) throws InstanceNotFoundException{
         return imageService.getImageById(id);
     }
 
-    @PostMapping(path = "images")
+    @PostMapping(path = "/images")
     public Image createImage(@RequestBody Image newImage) {
         return imageService.createImage(newImage);
     }
