@@ -1,52 +1,51 @@
 package com.projectImage.Image_Gallery.controller;
 
 import java.util.List;
+
 import javax.management.InstanceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
-import org.springframework.web.bind.annotation.*;
-
 
 @RestController
-@RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/v1") 
 public class ImageController {
 
-
     @Autowired
-    ImageServices imageServices;
+    ImageServices imageService;
 
-    @GetMapping("/images")
+    @GetMapping
     public List<Image> getAllImages() {
-        return imageServices.getAllImages();
+        return imageService.getAllImages();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/images/{id}")
     public Image getImageById(@PathVariable Long id) throws InstanceNotFoundException {
-        return imageServices.getImageById(id);
+        return imageService.getImageById(id);
     }
 
-    @PostMapping(path = "images")
+    @PostMapping (path = "images")
     public Image createImage(@RequestBody Image newImage) {
-        return imageServices.createImage(newImage);
+        return imageService.createImage(newImage);
     }
 
-    @DeleteMapping(path = "/images/{id}")
-    public void deleteImage(@PathVariable long id) {
-        imageServices.deleteImage(id);
+    @PutMapping("/images/{id}")
+    public Image updateImage(@PathVariable Long id, @RequestBody Image updatedImage) throws InstanceNotFoundException {
+        return imageService.updateImage(id, updatedImage);
     }
 
-    @PutMapping(path = "/images/{id}")
-    public void updateImage(@RequestBody Image image, @PathVariable Long id){
-        imageServices.updateImage(id, image);
+    @DeleteMapping("/images/{id}")
+    public void deleteImage(@PathVariable Long id) {
+        imageService.deleteImage(id);
     }
 }

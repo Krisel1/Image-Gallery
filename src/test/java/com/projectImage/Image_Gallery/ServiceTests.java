@@ -1,13 +1,18 @@
 package com.projectImage.Image_Gallery;
 
-import com.projectImage.Image_Gallery.models.Image;
-import com.projectImage.Image_Gallery.repositories.IImageRepository;
-import com.projectImage.Image_Gallery.services.ImageServices;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +43,7 @@ public class ServiceTests {
 
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
-        ArrayList<Image> listOfImages = new ArrayList<Image>();
+        ArrayList<Image> listOfImages = new ArrayList<>();
 
         Image image1 = new Image(1L, "árbol", "picture of mountains, trees and a lake",
                 "https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/arbol.jpg?raw=true",

@@ -11,8 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import static org.mockito.Mockito.*;
@@ -69,24 +73,25 @@ public class ControllerTests {
         image3.setUrl("https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true");
         image3.setFavorite(false);
 
-        imageList = new ArrayList<Image>();
+        imageList = new ArrayList<>();
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
-
+        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
     }
 
     @Test
     public void testUpdateImage() throws Exception {
         Long id = 1L;
         Image testImage = new Image();
-        testImage.setTitle("Test Image");
+        testImage.setName("Test Image");
 
         doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
 
-        imageController.updateImage(testImage, id);
-
-        verify(imageServices).updateImage(eq(id), any(Image.class));
+        mockMvc.perform(put("/api/images/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(testImage)))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -139,4 +144,32 @@ public class ControllerTests {
         assertEquals(result.getDescription(), "HTTP methods");
         verify(imageServices, times(1)).createImage(any(Image.class));
     }
+
+    @Test
+    public void test_GetAllImage(){
+        when(imageServices.getAllImages()).thenReturn(imageList);
+
+        List<Image> result = imageController.getAllImages();
+
+        assertNotNull(result);
+        assertEquals(result.size(), 3);
+        verify(imageServices, times(1)).getAllImages();
+
+    }
+
+    @Test
+    public void test_GetImageById() throws Exception {
+    Long id = 1L;
+    Image image = new Image();
+    image.setId(id);
+    when(imageServices.getImageById(id)).thenReturn(image);
+
+    Image result = imageController.get(id);
+
+    assertNotNull(result);
+    assertEquals(result.getId(), id);
+    verify(imageServices, times(1)).getImageById(id);
+}
+
+
 }
