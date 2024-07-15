@@ -1,22 +1,18 @@
 package com.projectImage.Image_Gallery;
 
-
 import com.projectImage.Image_Gallery.controller.ImageController;
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
-import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import static org.mockito.Mockito.*;
@@ -25,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import org.springframework.http.MediaType;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,8 +44,7 @@ public class ControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
@@ -154,10 +150,22 @@ public class ControllerTests {
         assertEquals(result.getDescription(), "HTTP methods");
         verify(imageServices, times(1)).createImage(any(Image.class));
     }
-    
+
     @Test
     public void test_GetAllImage(){
         when(imageServices.getAllImages()).thenReturn(imageList);
+
+    @Test
+    public void testTagImageAsFavorite() throws Exception {
+        Long id = 1L;
+
+        doNothing().when(imageServices).tagImageAsFavorite(id);
+
+        mockMvc.perform(put("/api/image/{id}/favorite", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+}
 
         List<Image> result = imageController.getAllImages();
 
