@@ -17,4 +17,9 @@ public class ImageController {
     public void updateImage(@RequestBody Image image, @PathVariable Long id){
         imageService.updateImage(id, image);
     }
+
+    @PutMapping(path = "/image/{id}/favorite")
+    public void tagImageAsFavorite(@PathVariable Long id) {
+        imageService.tagImageAsFavorite(id);
+    }
 }
