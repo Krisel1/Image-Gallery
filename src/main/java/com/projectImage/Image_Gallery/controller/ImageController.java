@@ -34,17 +34,17 @@ public class ImageController {
         return imageService.getImageById(id);
     }
 
-    @PostMapping
+    @PostMapping (path = "images")
     public Image createImage(@RequestBody Image newImage) {
         return imageService.createImage(newImage);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/images/{id}")
     public Image updateImage(@PathVariable Long id, @RequestBody Image updatedImage) throws InstanceNotFoundException {
         return imageService.updateImage(id, updatedImage);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/images/{id}")
     public void deleteImage(@PathVariable Long id) {
         imageService.deleteImage(id);
     }
