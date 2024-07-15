@@ -16,11 +16,14 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,7 +63,6 @@ public class ServiceTests {
         listOfImages.add(image1);
         listOfImages.add(image2);
         listOfImages.add(image3);
-        when(iImageRepository.findAll()).thenReturn(listOfImages);
 
         imageServices.deleteImage(2L);
 
@@ -104,6 +106,7 @@ public class ServiceTests {
         verify(iImageRepository).save(any(Image.class));
     }
 
+    @Test
     public void testUpdateImage() {
         // Arrange
         Long id = 1L;
@@ -118,16 +121,4 @@ public class ServiceTests {
         assert (newImage.getId().equals(id));
     }
 
-//    @Test
-//    public void testUpdateImageFavorite() {
-//        // Arrange
-//        Long id = 1L;
-//
-//        // Act
-//        imageServices.tagImageAsFavorite(id);
-//
-//        // Assert
-//        verify(iimageRepository).save(any(Image.class));
-//        assert(newImage.getId().equals(id));
-//    }
 }

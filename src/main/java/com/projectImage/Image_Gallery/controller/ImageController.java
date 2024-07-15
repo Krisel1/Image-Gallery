@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class ImageController {
 
     @Autowired
-    ImageServices imageService;
+    IImageServices imageService;
 
     @GetMapping
     public List<Image> getAllImages() {

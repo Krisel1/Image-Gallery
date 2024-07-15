@@ -5,19 +5,17 @@ import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 
-import com.projectImage.Image_Gallery.models.Image;
-import com.projectImage.Image_Gallery.repositories.IImageRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projectImage.Image_Gallery.models.Image;
+import com.projectImage.Image_Gallery.repositories.IImageRepository;
 
 @Service
 public class ImageServices {
 
     @Autowired
     IImageRepository iImageRepository;
-
 
     public void deleteImage(long id) {
         iImageRepository.deleteById(id);
@@ -26,7 +24,6 @@ public class ImageServices {
     public Image createImage(Image newImage){
         return iImageRepository.save(newImage);
     }
-   
 
     public List<Image> getAllImages(){
         return (List<Image>) iImageRepository.findAll();
