@@ -1,10 +1,7 @@
 package com.projectImage.Image_Gallery;
 
 
-import com.projectImage.Image_Gallery.controller.ImageController;
-import com.projectImage.Image_Gallery.models.Image;
-import com.projectImage.Image_Gallery.services.ImageServices;
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,14 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import java.util.ArrayList;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,11 +46,15 @@ public class ControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
 
+        image1 = new Image();
         image1 = new Image();
         image1.setId(1L);
         image1.setTitle("árbol");
@@ -63,6 +63,7 @@ public class ControllerTests {
         image1.setFavorite(false);
 
         image2 = new Image();
+        image2 = new Image();
         image2.setId(2L);
         image2.setTitle("hojas");
         image2.setDescription("picture of green leaves, yellow and orange leaves");
@@ -70,12 +71,14 @@ public class ControllerTests {
         image2.setFavorite(false);
 
         image3 = new Image();
+        image3 = new Image();
         image3.setId(3L);
         image3.setTitle("lago");
         image3.setDescription("picture of mountains, trees and a lake in winter");
         image3.setUrl("https://github.com/diegoFactoriaf5/MyFavoriteImage-Frontend/blob/main/src/assets/images/lago.jpg?raw=true");
         image3.setFavorite(false);
 
+        imageList = new ArrayList<>();
         imageList = new ArrayList<>();
         imageList.add(image1);
         imageList.add(image2);
@@ -100,10 +103,13 @@ public class ControllerTests {
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
         when(imageController.getAllImages()).thenReturn(imageList);
+        when(imageController.getAllImages()).thenReturn(imageList);
 
+        //Act
         //Act
         imageController.deleteImage(2L);
 
+        //Assert
         //Assert
         verify(imageServices).deleteImage(2L);
 
