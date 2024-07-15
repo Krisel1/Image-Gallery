@@ -16,15 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1") 
 public class ImageController {
 
     @Autowired
-    IImageServices imageService;
+    ImageServices imageService;
 
     @GetMapping
     public List<Image> getAllImages() {
