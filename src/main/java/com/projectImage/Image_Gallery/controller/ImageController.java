@@ -18,7 +18,7 @@ import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
 
 @RestController
-@RequestMapping("/api/v1") // Se establece la raíz de las rutas para este controlador
+@RequestMapping("/api/v1") 
 public class ImageController {
 
     @Autowired
