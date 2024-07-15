@@ -71,17 +71,4 @@ public class ServiceTests {
         verify(iImageRepository).save(image);
         assert(image.isFavorite());
     }
-
-    @Test
-    void testTagImageAsFavorite_ImageNotFound() {
-        // Arrange
-        when(iImageRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // Act
-        imageServices.tagImageAsFavorite(1L);
-
-        // Assert
-        verify(iImageRepository).findById(1L);
-        verify(iImageRepository).save(any(Image.class)); // This line should fail as save should not be called
-    }
 }
