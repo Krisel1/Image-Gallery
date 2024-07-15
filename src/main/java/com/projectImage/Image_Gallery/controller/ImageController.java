@@ -1,9 +1,7 @@
 package com.projectImage.Image_Gallery.controller;
 
 import java.util.List;
-
 import javax.management.InstanceNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1")
@@ -26,30 +23,30 @@ public class ImageController {
 
 
     @Autowired
-    ImageServices imageService;
+    ImageServices imageServices;
 
     @GetMapping("/images")
     public List<Image> getAllImages() {
-        return imageService.getAllImages();
+        return imageServices.getAllImages();
     }
 
     @GetMapping("/{id}")
-    public Image get(@PathVariable Long id) throws InstanceNotFoundException{
-        return imageService.getImageById(id);
+    public Image getImageById(@PathVariable Long id) throws InstanceNotFoundException {
+        return imageServices.getImageById(id);
     }
 
     @PostMapping(path = "images")
     public Image createImage(@RequestBody Image newImage) {
-        return imageService.createImage(newImage);
+        return imageServices.createImage(newImage);
     }
 
     @DeleteMapping(path = "/images/{id}")
     public void deleteImage(@PathVariable long id) {
-        imageService.deleteImage(id);
+        imageServices.deleteImage(id);
     }
 
     @PutMapping(path = "/images/{id}")
     public void updateImage(@RequestBody Image image, @PathVariable Long id){
-        imageService.updateImage(id, image);
+        imageServices.updateImage(id, image);
     }
 }

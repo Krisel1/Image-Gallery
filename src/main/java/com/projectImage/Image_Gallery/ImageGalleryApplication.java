@@ -13,5 +13,4 @@ public class ImageGalleryApplication {
 		SpringApplication.run(ImageGalleryApplication.class, args);
 	}
 
-
 }

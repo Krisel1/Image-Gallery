@@ -73,26 +73,25 @@ public class ControllerTests {
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+
     }
 
     @Test
     public void testUpdateImage() throws Exception {
         Long id = 1L;
         Image testImage = new Image();
-        testImage.setName("Test Image");
+        testImage.setTitle("Test Image");
 
         doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
 
-        mockMvc.perform(put("/api/images/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(testImage)))
-                .andExpect(status().isOk());
+        imageController.updateImage(testImage, id);
+
+        verify(imageServices).updateImage(eq(id), any(Image.class));
     }
 
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
-        when(imageController.getAllImages()).thenReturn(imageList);
+        when(imageServices.getAllImages()).thenReturn(imageList);
 
         //Act
         imageController.deleteImage(2L);

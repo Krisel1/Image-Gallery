@@ -37,8 +37,6 @@ public class ImageServices {
         newImage.setId(id);
         iImageRepository.save(newImage);
     }
-
-
 }
 
 
