@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,8 +45,6 @@ public class ControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
@@ -84,33 +84,16 @@ public class ControllerTests {
     }
 
     @Test
-    public void testUpdateImage() throws Exception {
-        Long id = 1L;
-        Image testImage = new Image();
-        testImage.setName("Test Image");
-
-        doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
-
-        mockMvc.perform(put("/api/images/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(testImage)))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void test_if_deleteImage_deletes_by_Id() {
         when(imageController.getAllImages()).thenReturn(imageList);
-        when(imageController.getAllImages()).thenReturn(imageList);
 
-        //Act
         //Act
         imageController.deleteImage(2L);
 
         //Assert
-        //Assert
         verify(imageServices).deleteImage(2L);
 
-    }*/
+    }
 
     @Test
         void test_Create_Image_Id() {
@@ -154,6 +137,40 @@ public class ControllerTests {
     @Test
     public void test_GetAllImage(){
         when(imageServices.getAllImages()).thenReturn(imageList);
+        List<Image> result = imageController.getAllImages();
+
+        assertNotNull(result);
+        assertEquals(result.size(), 3);
+        verify(imageServices, times(1)).getAllImages();
+    }
+
+//    @Test
+//    public void test_GetImageById() throws Exception {
+//        Long id = 1L;
+//        Image image = new Image();
+//        image.setId(id);
+//        when(imageServices.getImageById(id)).thenReturn(image);
+//
+//        Image result = imageController.get(id);
+//
+//        assertNotNull(result);
+//        assertEquals(result.getId(), id);
+//        verify(imageServices, times(1)).getImageById(id);
+//    }
+
+    @Test
+    public void testUpdateImage() throws Exception {
+        Long id = 1L;
+        Image testImage = new Image();
+        testImage.setName("Test Image");
+
+        doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
+
+        mockMvc.perform(put("/api/images/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(testImage)))
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void testTagImageAsFavorite() throws Exception {
@@ -161,33 +178,8 @@ public class ControllerTests {
 
         doNothing().when(imageServices).tagImageAsFavorite(id);
 
-        mockMvc.perform(put("/api/image/{id}/favorite", id)
+        mockMvc.perform(put("/api/v1/image/{id}/favorite", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-}
-
-        List<Image> result = imageController.getAllImages();
-
-        assertNotNull(result);
-        assertEquals(result.size(), 3);
-        verify(imageServices, times(1)).getAllImages();
-
-    }
-
-    @Test
-    public void test_GetImageById() throws Exception {
-    Long id = 1L;
-    Image image = new Image();
-    image.setId(id);
-    when(imageServices.getImageById(id)).thenReturn(image);
-
-    Image result = imageController.get(id);
-
-    assertNotNull(result);
-    assertEquals(result.getId(), id);
-    verify(imageServices, times(1)).getImageById(id);
-}
-
-
 }
