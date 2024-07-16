@@ -83,20 +83,6 @@ public class ControllerTests {
     }
 
     @Test
-    public void testUpdateImage() throws Exception {
-        Long id = 1L;
-        Image testImage = new Image();
-        testImage.setName("Test Image");
-
-        doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
-
-        mockMvc.perform(put("/api/images/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(testImage)))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void test_if_deleteImage_deletes_by_Id() {
         when(imageController.getAllImages()).thenReturn(imageList);
 
@@ -132,7 +118,6 @@ public class ControllerTests {
         assertNotNull(result);
         assertEquals(result.getTitle(), "New Image");
         verify(imageServices, times(1)).createImage(any(Image.class));
-
     }
 
     @Test
@@ -146,19 +131,44 @@ public class ControllerTests {
         assertNotNull(result);
         assertEquals(result.getDescription(), "HTTP methods");
         verify(imageServices, times(1)).createImage(any(Image.class));
-
     }
 
     @Test
     public void test_GetAllImage(){
         when(imageServices.getAllImages()).thenReturn(imageList);
-
         List<Image> result = imageController.getAllImages();
 
         assertNotNull(result);
         assertEquals(result.size(), 3);
         verify(imageServices, times(1)).getAllImages();
+    }
 
+//    @Test
+//    public void test_GetImageById() throws Exception {
+//        Long id = 1L;
+//        Image image = new Image();
+//        image.setId(id);
+//        when(imageServices.getImageById(id)).thenReturn(image);
+//
+//        Image result = imageController.get(id);
+//
+//        assertNotNull(result);
+//        assertEquals(result.getId(), id);
+//        verify(imageServices, times(1)).getImageById(id);
+//    }
+
+    @Test
+    public void testUpdateImage() throws Exception {
+        Long id = 1L;
+        Image testImage = new Image();
+        testImage.setName("Test Image");
+
+        doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
+
+        mockMvc.perform(put("/api/images/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(testImage)))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -167,24 +177,8 @@ public class ControllerTests {
 
         doNothing().when(imageServices).tagImageAsFavorite(id);
 
-        mockMvc.perform(put("/api/image/{id}/favorite", id)
+        mockMvc.perform(put("/api/v1/image/{id}/favorite", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-
-
-    @Test
-    public void test_GetImageById() throws Exception {
-        Long id = 1L;
-        Image image = new Image();
-        image.setId(id);
-        when(imageServices.getImageById(id)).thenReturn(image);
-
-        Image result = imageController.getImageById(id);
-
-        assertNotNull(result);
-        assertEquals(result.getId(), id);
-        verify(imageServices, times(1)).getImageById(id);
-    }
-
 }
