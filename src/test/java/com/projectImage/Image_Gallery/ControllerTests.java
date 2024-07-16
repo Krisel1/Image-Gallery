@@ -76,11 +76,10 @@ public class ControllerTests {
         image3.setFavorite(false);
 
         imageList = new ArrayList<>();
-        imageList = new ArrayList<>();
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+
     }
 
     @Test

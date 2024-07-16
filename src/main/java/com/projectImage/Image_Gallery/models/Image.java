@@ -33,4 +33,5 @@ public class Image {
 
     public void setName(String testImage) {
     }
+
 }

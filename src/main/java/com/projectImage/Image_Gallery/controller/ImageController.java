@@ -34,7 +34,7 @@ public class ImageController {
         return imageService.getImageById(id);
     }
 
-    @PostMapping (path = "images")
+    @PostMapping(path = "/images")
     public Image createImage(@RequestBody Image newImage) {
         return imageService.createImage(newImage);
     }
