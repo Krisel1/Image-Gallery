@@ -34,12 +34,12 @@ public class ImageController {
         return imageService.getImageById(id);
     }
 
-    @PostMapping (path = "images")
+    @PostMapping(path = "/images")
     public Image createImage(@RequestBody Image newImage) {
         return imageService.createImage(newImage);
     }
 
-    @PutMapping("/images/{id}")
+    @PutMapping(path = "/images/{id}")
     public Image updateImage(@PathVariable Long id, @RequestBody Image updatedImage) throws InstanceNotFoundException {
         return imageService.updateImage(id, updatedImage);
     }

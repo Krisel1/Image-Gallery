@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,8 +45,6 @@ public class ControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
@@ -76,11 +76,10 @@ public class ControllerTests {
         image3.setFavorite(false);
 
         imageList = new ArrayList<>();
-        imageList = new ArrayList<>();
         imageList.add(image1);
         imageList.add(image2);
         imageList.add(image3);
-        mockMvc = MockMvcBuilders.standaloneSetup(imageController).build();
+
     }
 
     @Test
@@ -100,17 +99,14 @@ public class ControllerTests {
     @Test
     public void test_if_deleteImage_deletes_by_Id() {
         when(imageController.getAllImages()).thenReturn(imageList);
-        when(imageController.getAllImages()).thenReturn(imageList);
 
-        //Act
         //Act
         imageController.deleteImage(2L);
 
         //Assert
-        //Assert
         verify(imageServices).deleteImage(2L);
 
-    }*/
+    }
 
     @Test
         void test_Create_Image_Id() {
@@ -136,6 +132,7 @@ public class ControllerTests {
         assertNotNull(result);
         assertEquals(result.getTitle(), "New Image");
         verify(imageServices, times(1)).createImage(any(Image.class));
+
     }
 
     @Test
@@ -149,11 +146,20 @@ public class ControllerTests {
         assertNotNull(result);
         assertEquals(result.getDescription(), "HTTP methods");
         verify(imageServices, times(1)).createImage(any(Image.class));
+
     }
 
     @Test
     public void test_GetAllImage(){
         when(imageServices.getAllImages()).thenReturn(imageList);
+
+        List<Image> result = imageController.getAllImages();
+
+        assertNotNull(result);
+        assertEquals(result.size(), 3);
+        verify(imageServices, times(1)).getAllImages();
+
+    }
 
     @Test
     public void testTagImageAsFavorite() throws Exception {
@@ -165,29 +171,20 @@ public class ControllerTests {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-}
 
-        List<Image> result = imageController.getAllImages();
-
-        assertNotNull(result);
-        assertEquals(result.size(), 3);
-        verify(imageServices, times(1)).getAllImages();
-
-    }
 
     @Test
     public void test_GetImageById() throws Exception {
-    Long id = 1L;
-    Image image = new Image();
-    image.setId(id);
-    when(imageServices.getImageById(id)).thenReturn(image);
+        Long id = 1L;
+        Image image = new Image();
+        image.setId(id);
+        when(imageServices.getImageById(id)).thenReturn(image);
 
-    Image result = imageController.get(id);
+        Image result = imageController.getImageById(id);
 
-    assertNotNull(result);
-    assertEquals(result.getId(), id);
-    verify(imageServices, times(1)).getImageById(id);
-}
-
+        assertNotNull(result);
+        assertEquals(result.getId(), id);
+        verify(imageServices, times(1)).getImageById(id);
+    }
 
 }
