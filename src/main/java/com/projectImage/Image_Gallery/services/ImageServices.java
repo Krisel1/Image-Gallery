@@ -34,9 +34,18 @@ public class ImageServices {
         return image.orElseThrow(() -> new InstanceNotFoundException("Image not found with id " + id));
     }
 
-    public Image updateImage(Long id, Image newImage) {
+    public void updateImage(Long id, Image newImage) {
         newImage.setId(id);
-        return iImageRepository.save(newImage);
+        iImageRepository.save(newImage);
+    }
+
+    public void tagImageAsFavorite(Long id) {
+        Optional<Image> imageOptional = iImageRepository.findById(id);
+        if (imageOptional.isPresent()) {
+            Image image = imageOptional.get();
+            image.setFavorite(true);
+            iImageRepository.save(image);
+        }
     }
 
 }
