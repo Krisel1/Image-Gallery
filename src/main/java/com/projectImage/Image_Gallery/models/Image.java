@@ -25,10 +25,13 @@ public class Image {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column()
+    @Column(name = "FILE PATH")
     private String url;
 
     @Column(name = "FAVORITE")
     private boolean isFavorite;
+
+    public void setName(String testImage) {
+    }
 
 }
