@@ -114,7 +114,7 @@ public class ControllerTests {
         //Assert
         verify(imageServices).deleteImage(2L);
 
-    }*/
+    }
 
     @Test
         void test_Create_Image_Id() {
