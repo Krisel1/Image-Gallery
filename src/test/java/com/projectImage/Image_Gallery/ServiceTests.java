@@ -1,32 +1,36 @@
 package com.projectImage.Image_Gallery;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import com.projectImage.Image_Gallery.controller.ImageController;
+import com.projectImage.Image_Gallery.models.Image;
+import com.projectImage.Image_Gallery.repositories.IImageRepository;
+import com.projectImage.Image_Gallery.services.ImageServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.MediaType;
+import java.security.cert.Extension;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class ServiceTests {
 
     @Mock
@@ -34,11 +38,15 @@ public class ServiceTests {
 
     @InjectMocks
     private ImageServices imageServices;
+    private Image image;
+
 
     @BeforeEach
-
-    public void setUp() {
+    public void setUp(){
         MockitoAnnotations.openMocks(this);
+        image = new Image();
+        image.setId(1L);
+        image.setFavorite(false);
     }
 
     @Test
@@ -112,6 +120,20 @@ public class ServiceTests {
 
         // Assert
         verify(iImageRepository).save(any(Image.class));
-        assert (newImage.getId().equals(id));
+        assert(newImage.getId().equals(id));
+    }
+
+    @Test
+    void testTagImageAsFavorite() {
+        // Arrange
+        when(iImageRepository.findById(1L)).thenReturn(Optional.of(image));
+
+        // Act
+        imageServices.tagImageAsFavorite(1L);
+
+        // Assert
+        verify(iImageRepository).findById(1L);
+        verify(iImageRepository).save(image);
+        assert(image.isFavorite());
     }
 }
