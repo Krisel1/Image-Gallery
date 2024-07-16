@@ -1,9 +1,11 @@
 package com.projectImage.Image_Gallery;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projectImage.Image_Gallery.controller.ImageController;
 import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +24,8 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import org.springframework.http.MediaType;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +38,6 @@ public class ControllerTests {
 
     @InjectMocks
     private ImageController imageController;
-    private MockMvc mockMvc;
 
     private Image image1;
     private Image image2;
@@ -45,6 +46,7 @@ public class ControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
@@ -165,7 +167,7 @@ public class ControllerTests {
 
         doNothing().when(imageServices).updateImage(eq(id), any(Image.class));
 
-        mockMvc.perform(put("/api/images/{id}", id)
+        mockMvc.perform(put("/api/v1/images/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testImage)))
                 .andExpect(status().isOk());
