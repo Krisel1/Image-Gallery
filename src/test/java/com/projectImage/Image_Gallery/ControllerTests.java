@@ -1,34 +1,33 @@
 package com.projectImage.Image_Gallery;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.projectImage.Image_Gallery.controller.ImageController;
-import com.projectImage.Image_Gallery.models.Image;
-import com.projectImage.Image_Gallery.services.ImageServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.projectImage.Image_Gallery.controller.ImageController;
+import com.projectImage.Image_Gallery.models.Image;
+import com.projectImage.Image_Gallery.services.ImageServices;
 
 @SpringBootTest
 public class ControllerTests {
@@ -145,19 +144,19 @@ public class ControllerTests {
         verify(imageServices, times(1)).getAllImages();
     }
 
-//    @Test
-//    public void test_GetImageById() throws Exception {
-//        Long id = 1L;
-//        Image image = new Image();
-//        image.setId(id);
-//        when(imageServices.getImageById(id)).thenReturn(image);
-//
-//        Image result = imageController.get(id);
-//
-//        assertNotNull(result);
-//        assertEquals(result.getId(), id);
-//        verify(imageServices, times(1)).getImageById(id);
-//    }
+    @Test
+    public void test_GetImageById() throws Exception {
+        Long id = 1L;
+        Image image = new Image();
+        image.setId(id);
+        when(imageServices.getImageById(id)).thenReturn(image);
+
+        Image result = imageController.getImageById(id);
+
+        assertNotNull(result);
+        assertEquals(result.getId(), id);
+          verify(imageServices, times(1)).getImageById(id);
+    }
 
     @Test
     public void testUpdateImage() throws Exception {

@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .authorizeRequests(requests -> requests
                         .anyRequest().permitAll())
-                .csrf(csrf -> csrf.disable()); // Deshabilita CSRF (puedes habilitarlo según tus requisitos)
+                .csrf(csrf -> csrf.disable()); 
         
         return http.build();
     }

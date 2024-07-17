@@ -18,7 +18,7 @@ import com.projectImage.Image_Gallery.models.Image;
 import com.projectImage.Image_Gallery.services.ImageServices;
 
 @RestController
-@RequestMapping("/api/v1") 
+@RequestMapping("${API_URL_PATTERN}") 
 public class ImageController {
 
     @Autowired
